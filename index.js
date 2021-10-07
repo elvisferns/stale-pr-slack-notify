@@ -3,7 +3,9 @@ import moment from "moment";
 import colors from "./colors.js";
 
 const pullStalePRs = async (repo, token, baseBranch) => {
+  // console.log("🚀 ~ file: index.js ~ line 6 ~ pullStalePRs ~ repo, token, baseBranch", repo, token, baseBranch)
   const queryParams = `q=is:pr repo:${repo} state:open base:${baseBranch}`;
+  console.log("🚀 ~ file: index.js ~ line 8 ~ pullStalePRs ~ queryParams", queryParams)
   const res = await axios.get(`https://api.github.com/search/issues?${queryParams}`, {
     headers: {
       Accept: "application/vnd.github.v3.raw+json",
@@ -87,7 +89,7 @@ const notifySlack = async (pullURL, payload) => {
 const run = async () => {
   try {
     console.log('start')
-    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.GITHUB_TOKEN, process.env.BASE_BRANCH);
+    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.INPUT_BASE_BRANCH);
     console.log("🚀 ~ file: index.js ~ line 91 ~ run ~ stalePRs", stalePRs)
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
