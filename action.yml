@@ -12,6 +12,10 @@ inputs:
   slack_web_hook:  # id of input
     description: 'slack web hook to send notificaton'
     required: true
+  base_branch:
+    description: 'Base branch of the PR'
+    required: false
+    default: 'main'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -19,3 +23,4 @@ runs:
     - ${{ inputs.repo_token }}
     - ${{ inputs.stale_label }}
     - ${{ inputs.who-to-greet }}
+    - ${{ inputs.base_branch }}
