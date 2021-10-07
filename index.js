@@ -22,7 +22,7 @@ const run = async () => {
     });
     console.log("file: index.js ~ line 18 ~ run ~ res", res);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     process.exit(1);
   }
 };
