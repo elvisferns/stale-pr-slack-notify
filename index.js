@@ -86,12 +86,12 @@ const notifySlack = async (pullURL, payload) => {
 
 const run = async () => {
   try {
-    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.REPO_TOKEN, process.env.BASE_BRANCH);
+    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.GITHUB_TOKEN, process.env.BASE_BRANCH);
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
     }
   } catch (error) {
-    console.error(colors.error(error.message));
+    console.error(colors.error(error));
     process.exit(1);
   }
 };
