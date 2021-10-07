@@ -1,8 +1,8 @@
 FROM node:14-alpine
 
-ENV GITHUB_WORKSPACE /github/workspace
+# COPY ./entrypoint.sh /entrypoint.sh
 
-WORKDIR ${GITHUB_WORKSPACE}
+WORKDIR /app
 
 COPY ./package.json ./package.json
 
@@ -12,4 +12,4 @@ RUN npm i --production
 
 COPY ./index.js ./index.js
 
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT ["sh", "-c", "cd /app && npm start"]
