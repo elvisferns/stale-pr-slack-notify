@@ -1,6 +1,8 @@
 FROM node:14-alpine
 
-# WORKDIR 
+ENV GITHUB_WORKSPACE /github/workspace
+
+WORKDIR ${GITHUB_WORKSPACE}
 
 COPY ./package.json ./package.json
 
