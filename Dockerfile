@@ -12,4 +12,4 @@ RUN npm i --production
 
 COPY ./index.js ./index.js
 
-ENTRYPOINT ["sh", "-c", "cd /app && npm start"]
+ENTRYPOINT ["sh", "-c", "cd /app && pwd"]
