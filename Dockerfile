@@ -12,6 +12,4 @@ RUN npm i --production
 
 COPY index.js ./index.js
 
-COPY colors.js ./colors.js
-
 ENTRYPOINT ["sh", "-c", "cd /app && npm start"]
