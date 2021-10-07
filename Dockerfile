@@ -1,8 +1,6 @@
 FROM node:14-alpine
 
-LABEL "actionContainer"=true
-
-WORKDIR /app
+# WORKDIR 
 
 COPY ./package.json ./package.json
 
