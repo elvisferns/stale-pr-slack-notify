@@ -89,6 +89,7 @@ const run = async () => {
     const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.GITHUB_TOKEN, process.env.BASE_BRANCH);
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
+      console.log('finished')
     }
   } catch (error) {
     console.error(colors.error(error));
