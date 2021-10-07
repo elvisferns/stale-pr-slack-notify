@@ -77,7 +77,7 @@ const processSlackNotification = async (stalePRs = []) => {
 
 const notifySlack = async (pullURL, payload) => {
   try {
-    const res = await axios.post(`${process.env.slack_web_hook}`, payload);
+    const res = await axios.post(`${process.env.INPUT_SLACK_WEB_HOOK}`, payload);
     console.log(`Pull request ${pullURL} processed sucessfully`);
     return res.data;
   } catch (error) {
@@ -89,14 +89,14 @@ const notifySlack = async (pullURL, payload) => {
 const run = async () => {
   try {
     console.log('start')
-    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.INPUT_BASE_BRANCH);
-    console.log("🚀 ~ file: index.js ~ line 91 ~ run ~ stalePRs", stalePRs)
+    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.BASE_BRANCH);
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
-      console.log('finished')
+    } else {
+      console.log(colors.info('No stale Pull requests to process'))
     }
   } catch (error) {
-    console.error(colors.error(error));
+    console.error(colors.error(error.message));
     process.exit(1);
   }
 };
