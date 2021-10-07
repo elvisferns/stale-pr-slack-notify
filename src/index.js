@@ -1,6 +1,6 @@
 import { default as axios } from "axios";
-import colors from "./colors.js";
 import moment from "moment";
+import colors from "./colors.js";
 
 const pullStalePRs = async (repo, token, baseBranch) => {
   const queryParams = `q=is:pr repo:${repo} state:open base:${baseBranch}`;

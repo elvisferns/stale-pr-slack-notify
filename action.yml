@@ -3,7 +3,7 @@ author: 'Kaplan'
 description: 'send slack notification on stale PRs'
 inputs:
   repo_token:
-    description: 'token for call github APIs'
+    description: 'token to call github APIs'
     required: true
   stale_label:
     description: 'label to check for in PRs'
@@ -22,5 +22,4 @@ runs:
   args:
     - ${{ inputs.repo_token }}
     - ${{ inputs.stale_label }}
-    - ${{ inputs.who-to-greet }}
     - ${{ inputs.base_branch }}
