@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.22.0",
-    "colors": "^1.4.0",
     "moment": "^2.29.1"
   },
   "devDependencies": {

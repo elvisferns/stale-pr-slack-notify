@@ -1,6 +1,5 @@
 import { default as axios } from "axios";
 import moment from "moment";
-import colors from "./colors.js";
 
 const pullStalePRs = async (repo, token, baseBranch) => {
   // console.log("🚀 ~ file: index.js ~ line 6 ~ pullStalePRs ~ repo, token, baseBranch", repo, token, baseBranch)
@@ -88,15 +87,14 @@ const notifySlack = async (pullURL, payload) => {
 
 const run = async () => {
   try {
-    console.log('start')
-    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.BASE_BRANCH);
+    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.INPUT_BASE_BRANCH);
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
     } else {
-      console.log(colors.info('No stale Pull requests to process'))
+      console.log('No stale Pull requests to process')
     }
   } catch (error) {
-    console.error(colors.error(error.message));
+    console.error(error.message);
     process.exit(1);
   }
 };
