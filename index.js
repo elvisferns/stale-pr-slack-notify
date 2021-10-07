@@ -86,7 +86,9 @@ const notifySlack = async (pullURL, payload) => {
 
 const run = async () => {
   try {
+    console.log('start')
     const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.GITHUB_TOKEN, process.env.BASE_BRANCH);
+    console.log("🚀 ~ file: index.js ~ line 91 ~ run ~ stalePRs", stalePRs)
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
       console.log('finished')
