@@ -10,6 +10,8 @@ COPY ./package-lock.json ./package-lock.json
 
 RUN npm i --production
 
-COPY src/*.js ./
+COPY index.js ./index.js
 
-# ENTRYPOINT ["sh", "-c", "cd /app && npm start"]
+COPY color.js ./color.js
+
+ENTRYPOINT ["sh", "-c", "cd /app && npm start"]
