@@ -1,0 +1,21 @@
+name: 'Slack Notify Stale PRs'
+author: 'Kaplan'
+description: 'send slack notification on stale PRs'
+inputs:
+  repo_token:
+    description: 'token for call github APIs'
+    required: true
+  stale_label:
+    description: 'label to check for in PRs'
+    required: false
+    default: 'Stale'
+  slack_web_hook:  # id of input
+    description: 'slack web hook to send notificaton'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.repo_token }}
+    - ${{ inputs.stale_label }}
+    - ${{ inputs.who-to-greet }}
