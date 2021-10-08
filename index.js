@@ -41,7 +41,7 @@ const processSlackNotification = async (stalePRs = []) => {
                 type: "section",
                 text: {
                   type: "mrkdwn",
-                  text: `*Owner:* ${user} \n>*Pull title:* ${pullTitle}\n*Last updated at:* ${lastUpdateAt}`,
+                  text: `>*Owner:* ${user} \n>*Pull title:* ${pullTitle}\n>*Last updated at:* ${lastUpdateAt}`,
                 },
               },
               {
