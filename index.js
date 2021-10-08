@@ -1,10 +1,10 @@
 import { default as axios } from "axios";
 import moment from "moment";
 
-const pullStalePRs = async (repo, token, baseBranch) => {
+const pullStalePRs = async (repo, token, baseBranch, staleLabel = "stale") => {
   // console.log("🚀 ~ file: index.js ~ line 6 ~ pullStalePRs ~ repo, token, baseBranch", repo, token, baseBranch)
-  const queryParams = `q=is:pr repo:${repo} state:open base:${baseBranch}`;
-  console.log("🚀 ~ file: index.js ~ line 8 ~ pullStalePRs ~ queryParams", queryParams)
+  const queryParams = `q=is:pr repo:${repo} state:open base:${baseBranch} label:${staleLabel}`;
+  console.log("🚀 ~ file: index.js ~ line 8 ~ pullStalePRs ~ queryParams", queryParams);
   const res = await axios.get(`https://api.github.com/search/issues?${queryParams}`, {
     headers: {
       Accept: "application/vnd.github.v3.raw+json",
@@ -34,28 +34,14 @@ const processSlackNotification = async (stalePRs = []) => {
                 type: "header",
                 text: {
                   type: "plain_text",
-                  text: `Stale Pull Request on repo`,
+                  text: `Stale Pull Request on repo: ${process.env.GITHUB_REPOSITORY}`,
                 },
               },
               {
                 type: "section",
                 text: {
                   type: "mrkdwn",
-                  text: `*User:* ${user}`,
-                },
-              },
-              {
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `*Title:* ${pullTitle}`,
-                },
-              },
-              {
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `*Last updated at:* ${lastUpdateAt}`,
+                  text: `*Owner:* ${user} \n>*Pull title:* ${pullTitle}\n*Last updated at:* ${lastUpdateAt}`,
                 },
               },
               {
@@ -87,11 +73,16 @@ const notifySlack = async (pullURL, payload) => {
 
 const run = async () => {
   try {
-    const stalePRs = await pullStalePRs(process.env.GITHUB_REPOSITORY, process.env.INPUT_REPO_TOKEN, process.env.INPUT_BASE_BRANCH);
+    const stalePRs = await pullStalePRs(
+      process.env.GITHUB_REPOSITORY,
+      process.env.INPUT_REPO_TOKEN,
+      process.env.INPUT_BASE_BRANCH,
+      process.env.INPUT_STALE_LABEL
+    );
     if (stalePRs && stalePRs.length > 0) {
       await processSlackNotification(stalePRs);
     } else {
-      console.log('No stale Pull requests to process')
+      console.log("No stale Pull requests to process");
     }
   } catch (error) {
     console.error(error.message);
